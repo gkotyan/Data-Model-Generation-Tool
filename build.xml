@@ -1,0 +1,30 @@
+<project default="document">
+  
+  <property name="sf.username" value="<user_name>"/>
+  <property name="sf.password" value="<password and security code>"/>
+
+  <target name="document">
+      <echo message="Generating SchemaSpy documentation (requires Graphviz to be installed to produce diagrams)"/>
+      <delete dir="doc" failonerror="false"/>
+      <java classname="net.sourceforge.schemaspy.Main" fork="true" failonerror="true">
+          <arg line="-t schemaspy/force"/>
+          <arg line="-db Claims"/>
+          <arg line="-un ${sf.username}"/>
+          <arg line="-pw ${sf.password}"/>
+          <arg line="-connprops url\=https://login.salesforce.com/services/Soap/u/18.0"/>
+          <arg line="-o doc"/>
+          <arg line="-font Arial"/>
+          <arg line="-fontsize 8"/>
+          <arg line="-hq"/>
+          <arg line="-norows"/>
+          <arg line='-desc "Extracted from ClaimVantage Claims r${env.SVN_REVISION} on Force.com"'/>
+          <arg line="-u fake"/>
+          <arg line="-p fake"/>
+          <arg line="-host fake"/>
+          <classpath>
+               <fileset dir="schemaspy" includes="*.jar"/>
+          </classpath>
+      </java>
+  </target>
+
+</project>
